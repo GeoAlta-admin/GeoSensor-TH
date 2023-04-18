@@ -114,6 +114,7 @@ bool initBluetooth() {
   mySetBatteryDelta.setEventHandler(BLEUpdated, onSetBatteryDeltaWritten);
   mySetKeepAliveTimer.setEventHandler(BLEUpdated, onSetKeepAliveTimerWritten);
 
+  myButtonChar.setEventHandler(BLEIndicate, onButtonPressConfirmed);
 
   // Time to get noticed.  
   char devicename[sizeof(GEODEVICENAME)+22];
@@ -237,4 +238,8 @@ void onSetBatteryDeltaWritten(BLEDevice central, BLECharacteristic characteristi
 void onSetKeepAliveTimerWritten(BLEDevice central, BLECharacteristic characteristic) {
   Serial.print("Received keep alive cycle value: "); Serial.println(mySetKeepAliveTimer.value());
   // keepalivecycle = mySetKeepAliveTimer.value() * 1000;   // unsigned long
+}
+
+void onButtonPressConfirmed(BLEDevice central, BLECharacteristic characteristic) {
+  Serial.println("The button press confirmed");
 }
